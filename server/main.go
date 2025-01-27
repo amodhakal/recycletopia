@@ -5,6 +5,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/monitor"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -19,6 +20,10 @@ func main() {
 	}
 
 	app := fiber.New()
+	app.Get("/api/metrics", monitor.New())
+	app.Static("/", "../client/dist")
+	app.Static("*", "../client/dist/index.html")
+
 	app.Use(logger.New(logger.Config{Format: "${status} - ${method} ${path}\n"}))
 	log.Fatal(app.Listen(PORT))
 }
