@@ -14,9 +14,9 @@ func main() {
 	app := fiber.New()
 
 	repo.InitDB()
+	utils.AddLogger(app)
 	utils.AddMetrics(app)
 	utils.AddStaticFiles(app)
-	utils.AddLogger(app)
 
 	log.Fatal(app.Listen(PORT))
 }
